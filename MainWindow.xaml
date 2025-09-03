@@ -1,0 +1,44 @@
+<Window x:Class="PDFStudioSpire.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        Title="PDFStudioSpire" Height="900" Width="1400"
+        Background="#1e1e1e">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Padding" Value="10,6"/>
+        </Style>
+        <Style TargetType="ToggleButton">
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Padding" Value="10,6"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <!-- Top toolbar -->
+        <ToolBar DockPanel.Dock="Top">
+            <Button Content="Open" Click="Open_Click"/>
+            <ToggleButton x:Name="AddTextToggle" Content="Add Text" Checked="AddTextToggle_Checked" Unchecked="AddTextToggle_Unchecked"/>
+            <Separator/>
+            <Button Content="Save As…" Click="SaveAs_Click"/>
+            <Separator/>
+            <Button Content="Zoom -" Click="ZoomOut_Click"/>
+            <Button Content="Zoom +" Click="ZoomIn_Click"/>
+            <Separator/>
+            <TextBlock Text="Tip: In Add Text mode, click to place, type, Enter to commit." Foreground="Gray" VerticalAlignment="Center" Margin="12,0,0,0"/>
+        </ToolBar>
+
+        <!-- Viewer + overlay -->
+        <Grid>
+            <!-- Host the WinForms PDFium viewer -->
+            <wfi:WindowsFormsHost x:Name="PdfHost"/>
+
+            <!-- Transparent overlay for live editing -->
+            <Canvas x:Name="OverlayCanvas"
+                    Background="Transparent"
+                    MouseLeftButtonDown="OverlayCanvas_MouseLeftButtonDown"
+                    IsHitTestVisible="False"/>
+        </Grid>
+    </DockPanel>
+</Window>
